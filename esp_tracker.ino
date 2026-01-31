@@ -19,14 +19,6 @@ unsigned long ledTimer = 0;
 unsigned long lastToggle = 0;
 static bool ledState = false;
 
-WiFiCred networks[] = {
-  {"Redmi Note 8 Pro", "a0f57ebfc2a8"},
-  {"TOTOLINK_A3002RU_5G", "Emidot32"},
-  {"TP-Link_34FA", "88912462"}
-};
-
-const int NETWORK_COUNT = sizeof(networks) / sizeof(networks[0]);
-
 void setup() {
   // put your setup code here, to run once:
   pinMode(LED_PIN, OUTPUT);
@@ -101,11 +93,11 @@ void connectToWiFi() {
   for(int i = 0; i < n; i++) {
     String foundSSID = WiFi.SSID(i);
     for(int j = 0; j < NETWORK_COUNT; j++) {
-      if (foundSSID == networks[j].ssid) {
+      if (foundSSID == WIFI_LIST[j].ssid) {
         Serial.print("Connecting to ");
         Serial.println(foundSSID);
 
-        WiFi.begin(networks[j].ssid, networks[j].password);
+        WiFi.begin(WIFI_LIST[j].ssid, WIFI_LIST[j].password);
         if (WiFi.waitForConnectResult() == WL_CONNECTED) {
           Serial.println("Connected!");
           Serial.print("IP: ");
